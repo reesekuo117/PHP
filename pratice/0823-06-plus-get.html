@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 我們常在網頁中使用form表單來傳遞資料，然而在傳送之前我們必定要檢查每個欄位的資料，看看是不是必填的都填了、資料格式是否正確等等。
+        通常我們會使用Javascript裡的 onsubmit來檢查，如：<form onsubmit="checkForm(this);"></form> -->
+    <!-- 不送出表單onsubmit="return false; -->
+    <form name="form1" onsubmit="return false;">
+        <input type="number" name="a"> +
+        <input type="number" name="b">
+        <button type="button" onclick="sendData()"> = </button>
+        <span id="c"></span>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function sendData(){
+            const obj = {
+                a: document.form1.a.value,
+                b: document.form1.b.value,
+            };
+            $.get('0823-05-plus-api.php', obj, function(data){
+                $('#c').html(data);
+            });
+        }
+        // https://api.jquery.com/jQuery.get/#jQuery-get-url-data-success-dataType
+        // jQuery.get( url [, data ] [, success ] [, dataType ] )
+    </script>
+</body>
+</html>
+
+
+
+
