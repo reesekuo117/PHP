@@ -1,12 +1,12 @@
 <?php include __DIR__. '/parts/html.head.php'; ?>
 <?php include __DIR__. '/parts/navbar.php'; ?>
-<div class="conyainer">
+<div class="container">
     <h2>
         Hello
     </h2>
     <!-- 
         include 包含檔案進來
-        require 包含檔案進來(連資料庫)
+        require 包含檔案進來(連資料庫使用錯誤會直接出現)
     -->
 </div>
 <?php include __DIR__. '/parts/scripts.php'; ?>
