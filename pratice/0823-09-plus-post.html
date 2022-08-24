@@ -19,15 +19,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         function sendData(){
-            const obj = {
-                a: document.form1.a.value,
-                b: document.form1.b.value,
-            };
-            $.post('0823-07-plus-api.php',
-            $(document.form1).serialize(),  //表單欄位會轉換為字串 urlencoded!!! https://api.jquery.com/serialize/#serialize
-            function(data){
-                $('#c').html(data);
-            });
+            // const obj = {
+            //     a: document.form1.a.value,
+            //     b: document.form1.b.value,
+            // };
+            $.post(
+                '0823-07-plus-api.php',
+                $(document.form1).serialize(),  //表單欄位會轉換為字串 urlencoded!!! https://api.jquery.com/serialize/#serialize
+                function(data){
+                    $('#c').html(data.result);
+                },
+                'json'
+            );
         }
         // https://api.jquery.com/jQuery.get/#jQuery-get-url-data-success-dataType
         // jQuery.get( url [, data ] [, success ] [, dataType ] )
