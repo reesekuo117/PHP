@@ -19,6 +19,7 @@ $rows = $pdo->query($sql)->fetchAll();
                 <th scope="col">mobile</th>
                 <th scope="col">birthday</th>
                 <th scope="col">address</th>
+                <!-- scope無障礙網頁使用 -->
             </tr>
         </thead>
         <tbody>
