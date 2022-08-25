@@ -29,7 +29,8 @@ $stmt->execute([
 ]);
 
 echo $stmt->rowCount();
-//CRUD 新增修改刪除  //rowCount()影響的資料的筆數 //判斷有無修改成功
+//CRUD Create、Update、Delete新增修改刪除  
+//rowCount()影響的資料的筆數 //判斷有無修改成功
 
 echo json_encode([
     $stmt->rowCount(),   // 影響的資料筆數
