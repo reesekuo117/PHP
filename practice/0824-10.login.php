@@ -1,4 +1,5 @@
 <?php
+// empty — 檢查一個變量是否為空
 session_start();
 if(!empty($_POST) and $_POST['account']=='orange' and $_POST['password']=='1234'){
     $_SESSION['user1'] = [
@@ -37,6 +38,7 @@ if(!empty($_POST) and $_POST['account']=='orange' and $_POST['password']=='1234'
                 </div>
             <?php else: ?>
                 <h2><?= $_SESSION['user1']['nickname']. '你好' ?></h2>
+                <p><a href="0825-01.logout.php">登出</a></p>
             <?php endif ?>
             
         </div>
