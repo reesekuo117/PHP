@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__. '/parts/connect_db.php';  // /開頭
+$pageName ='list'; //頁面名稱
 
 $perPage = 4;  //每頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

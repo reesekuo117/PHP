@@ -22,6 +22,10 @@ try{
 
 //if//    判斷有沒有做初始化，沒有就會執行
 
+if(! isset($_SESSION)){
+    session_start();
+}
+
 
 
 
