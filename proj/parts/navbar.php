@@ -21,7 +21,7 @@
                             <a class="nav-link <?=$pageName=='home' ? 'active' : '' ?>" href="0824-09.combine.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="product-link <?=$pageName=='list' ? 'active' : '' ?>" href="data-list.php">商品</a>
+                            <a class="nav-link <?=$pageName=='list' ? 'active' : '' ?>" href="product-list.php">商品</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?=$pageName=='insert' ? 'active' : '' ?>" href="data-insert.php">新增</a>
