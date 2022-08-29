@@ -2,6 +2,8 @@
 
 require __DIR__. '/parts/connect_db.php';  // /開頭
 $pageName ='list'; //頁面名稱
+$title ='資料列表'; 
+
 
 $perPage = 10;  //每頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -19,7 +21,7 @@ $rows = []; //預設
 //有資料才執行 >0
 if($totalRows > 0){
     if($page<1){
-        //header('Location: data.list.php?page=1');
+        //header('Location: data-list.php?page=1');
         header('Location: ?page=1');
         exit;
     }
@@ -101,9 +103,10 @@ if($totalRows > 0){
             <?php foreach($rows as $r): ?>
             <tr>
                 <td> 
-                    <a href="data-del.php?sid=<?= $r['sid'] ?>"
+                    <a href="javascript: removeItem(<?= $r['sid'] ?>)"
                     data-onclick="event.currentTarget.closest('tr').remove()"
                     >
+                    <!-- data-del.php?sid= -->
                     <!--右面資料刪除 後端資料並未變更 
                     <a href="javascript: console.log(<?= $r['sid'] ?>)"
                     onclick="event.currentTarget.closest('tr').remove()"
@@ -116,9 +119,14 @@ if($totalRows > 0){
                 <td><?= $r['email'] ?></td>
                 <td><?= $r['mobile'] ?></td>
                 <td><?= $r['birthday'] ?></td>
-                <td><?= $r['address'] ?></td>
+
+                <!-- <td><?= strip_tags($r['address']) ?></td> -->
+                <!-- 1把標籤去除 避免被惡意植入js監控 -->
+
+                <td><?= htmlentities($r['address']) ?></td>
+                <!-- 2建議使用：跳脫htmlentities https://www.php.net/manual/en/function.htmlentities -->
                 <td>
-                    <a href="javescript: ">
+                    <a href="data-edit.php?sid=<?= $r['sid'] ?>">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a> 
                 </td>
@@ -132,7 +140,13 @@ if($totalRows > 0){
 
 </div>
 <?php include __DIR__. '/parts/scripts.php'; ?>
-
+<script>
+    function removeItem(sid){
+        if(confirm(`是否要刪除編號為 ${sid} 的資料？`)){
+            location.href = `data-del.php?sid=${sid}`;
+        }
+    }
+</script>
 <?php include __DIR__. '/parts/html.foot.php'; ?>
 
 

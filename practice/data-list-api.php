@@ -19,7 +19,7 @@ $rows = []; //預設
 //有資料才執行 >0
 if($totalRows > 0){
     if($page<1){
-        //header('Location: data.list.php?page=1');
+        //header('Location: data-list.php?page=1');
         header('Location: ?page=1');
         exit;
     }

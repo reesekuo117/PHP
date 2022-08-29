@@ -1,6 +1,22 @@
 <?php
 require __DIR__. '/parts/connect_db.php';  // /開頭
-$pageName ='insert'; //頁面名稱
+$pageName ='edit'; //頁面名稱
+$title ='編輯資料'; 
+// 如果有有給pkey 轉向並結束
+if(! isset($_GET['sid'])){
+    header('Location: data-list.php');
+    exit;
+}
+$sid = intval($_GET['sid']);
+$sql = "SELECT * FROM address_book WHERE sid=$sid";
+$r = $pdo->query($sql)->fetch();
+// 如果沒有資料 會拿到ture 轉到列表頁
+if(empty($r)){
+    header('Location: data-list.php');
+    exit;
+}
+// echo json_encode($r, JSON_UNESCAPED_UNICODE);
+// exit;
 ?>
 
 <?php include __DIR__. '/parts/html.head.php'; ?>
@@ -14,28 +30,30 @@ $pageName ='insert'; //頁面名稱
                 <form name='form1' onsubmit=" checkForm(); return false;" novalidate>  
                 <!-- novalidate 不要驗證表單 -->
                 <!-- https://www.wfublog.com/2021/04/html5-validator.html -->
+                <input type="hidden" name="sid" value="<?= $r['sid'] ?>">
+                <!-- hidden隱藏欄位 -->
                     <div class="mb-3">
                         <label for="name" class="form-label">name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name" required value="<?=htmlentities($r['name']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">email</label>
-                        <input type="email" class="form-control" id="email" name="email" >
+                        <input type="email" class="form-control" id="email" name="email" value="<?=($r['email']) ?>">
                         <!-- 信箱驗證 -->
                     </div>
                     <div class="mb-3">
                         <label for="mobile" class="form-label">mobile</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile">
+                        <input type="text" class="form-control" id="mobile" name="mobile" value="<?=($r['mobile']) ?>">
                         <!-- 手機驗證<input type="text" required="required" maxlength="11" pattern="09\d{2}-\d{6}"/> -->
                     </div>
                     <div class="mb-3">
                         <label for="birthday" class="form-label">birthday</label>
-                        <input type="date" class="form-control" id="birthday" name="birthday">
+                        <input type="date" class="form-control" id="birthday" name="birthday" value="<?=($r['birthday']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">address</label>
                         <textarea class="form-control" id="address" name="address" 
-                            cols="50" rows="3"></textarea>
+                            cols="50" rows="3"><?=htmlentities($r['address']) ?></textarea>
                         <!-- textarea /textarea 之間不能換行 裡面的所有值會在頁面上顯示 -->
                     </div>
                     <div id="msgContainer">
@@ -86,14 +104,14 @@ $pageName ='insert'; //頁面名稱
             //送出表單資料
             $.post(
                 //第一個參數要送給誰
-                'data.insert-api.php', 
+                'data-edit-api.php', 
                 //第二個參數：送出的資料
                 $(document.form1).serialize(),
                 //
                 function(data){
                     console.log(data);
                     if(data.success){
-                        genAlert('新增成功', 'success');
+                        genAlert('修改完成', 'success');
                     }else{
                         genAlert(data.error);
                     }
