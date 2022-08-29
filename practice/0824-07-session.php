@@ -2,7 +2,7 @@
 <?php
 
 session_start(); //初始化,才能使用＄_session  //啟動後才可以用！！！
-
+// 如果沒有設定 就拿到$_SESSION['my'] = 1;
 if(! isset($_SESSION['my'])){
     $_SESSION['my'] = 1; //設定
 }else{

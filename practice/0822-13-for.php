@@ -16,6 +16,14 @@
         </tr>
         <?php endfor; ?>
     </table>
-    <div><?= sprintf("%x", 255) ?></div>
+    <div><?= sprintf("%x", 255) ?></div> 
+    <!-- sprintf("%x", 255) 輸出的數值轉換16進位 -->
+    
+    <!-- 前面= 相當於echo 沒有=會出現錯誤 -->
+    <!-- = sprintf return回傳一個字串 -->
+    <!-- php prinyf (格式化輸出)直接輸出有echo功能 -->
+
+    <!-- % 標示的符號  s 表示輸出字串   Ｘ 表示輸出數值（有大小寫之分，輸出大寫或小寫）-->
+    
 </body>
 </html>

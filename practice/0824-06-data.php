@@ -1,6 +1,6 @@
 <pre>
 <?php
-// date_default_timezone_set('Asia/Taipei');
+// date_default_timezone_set('Asia/Taipei');   設定時區
 
 echo time(). "\n";              //取得 timestamp
 

@@ -11,6 +11,7 @@ $output = [
 ];
 //header('Content-Type: application/json'); //設定http檔頭,回應的檔案內容的類型  //可加可不加
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
+// json_encode轉換為json字串
 
 
 

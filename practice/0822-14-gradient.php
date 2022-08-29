@@ -22,5 +22,6 @@
             <?php endfor; ?>
         </tr>
     </table>
+    <!-- 顏色前面一定要＃ -->
 </body>
 </html>

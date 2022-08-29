@@ -3,7 +3,7 @@
 require __DIR__. '/parts/connect_db.php';  // /開頭
 $pageName ='list'; //頁面名稱
 
-$perPage = 4;  //每頁最多有幾筆
+$perPage = 10;  //每頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 //TODO: 代辦事項 沒做完不會向下執行
@@ -85,12 +85,14 @@ if($totalRows > 0){
         <table class="table table-striped table-bordered">
         <thead>
             <tr>
+                <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
                 <th scope="col">#</th>
                 <th scope="col">姓名</th>
-                <th scope="col">email</th></th>
+                <th scope="col">email</th>
                 <th scope="col">mobile</th>
                 <th scope="col">birthday</th>
                 <th scope="col">address</th>
+                <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                 <!-- scope無障礙網頁使用 -->
             </tr>
         </thead>
@@ -98,12 +100,28 @@ if($totalRows > 0){
             <!-- 在宣告為PHP區域時會打上<?php ?>，而它的縮寫是<? ?> -->
             <?php foreach($rows as $r): ?>
             <tr>
+                <td> 
+                    <a href="data-del.php?sid=<?= $r['sid'] ?>"
+                    data-onclick="event.currentTarget.closest('tr').remove()"
+                    >
+                    <!--右面資料刪除 後端資料並未變更 
+                    <a href="javascript: console.log(<?= $r['sid'] ?>)"
+                    onclick="event.currentTarget.closest('tr').remove()"
+                    >-->
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>  
+                </td>
                 <td><?= $r['sid'] ?></td>
                 <td><?= $r['name'] ?></td>
                 <td><?= $r['email'] ?></td>
                 <td><?= $r['mobile'] ?></td>
                 <td><?= $r['birthday'] ?></td>
                 <td><?= $r['address'] ?></td>
+                <td>
+                    <a href="javescript: ">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a> 
+                </td>
             </tr>
             <?php endforeach ?>
         </tbody>

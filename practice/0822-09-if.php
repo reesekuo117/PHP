@@ -24,5 +24,16 @@
     endif;
     ?>
     <!-- ?age=20 -->
+
+    <!-- 這種寫法可以取代{}
+    for(;;):
+        endfor;
+
+    switch(n):
+        endswitch;
+    
+    while(n):
+        endwhile;
+    -->
 </body>
 </html>

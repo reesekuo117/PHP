@@ -23,13 +23,18 @@
             //     a: document.form1.a.value,
             //     b: document.form1.b.value,
             // };
+
+            // jq語法
+            // ＄.post(rul,[,data][,success][,dataTypel])
             $.post(
-                '0823-07-plus-api.php',
+                '0823-07-plus-post-api.php',
+                // 使用jq.serialize()叫出整個表單
                 $(document.form1).serialize(),  //表單欄位會轉換為字串 urlencoded!!! https://api.jquery.com/serialize/#serialize
                 function(data){
                     $('#c').html(data.result);
                 },
                 'json'
+                // 轉換為字串
             );
         }
         // https://api.jquery.com/jQuery.get/#jQuery-get-url-data-success-dataType

@@ -3,11 +3,7 @@
 
     //$_GET內建變數
     echo $_GET['a'] + $_GET['b'];
-
-    //Warning: Undefined array key "a" in /Applications/XAMPP/xamppfiles/htdocs/php/pratice/0822-06-get.php on line 5
-    //Warning: Undefined array key "b" in /Applications/XAMPP/xamppfiles/htdocs/php/pratice/0822-06-get.php on line 5
-
-    //在網址給值  /?a=100&b=10
+    //在網址給值  ?a=100&b=10
 
     // isset() 判斷是不是有設定
     // intval() 把字串轉換為整數
