@@ -20,17 +20,22 @@ if(!empty($_GET['sid'])){
         //不做這個
         if(!empty($_SESSION['cart']['sid'])){
             //已存在 做變更
+            $_SESSION['cart'][$sid]['qty'] = $qty;
         }else{
             //新增
             //TODO:檢查資料表是不有這個商品
+            $row = $pdo->query("SELECT * FROM products WHERE sid=$sid")->fetch();
+            if(! empty($row)){
+                $row['qty'] = $qty; //先把數量放進去
+                $_SESSION['cart'][$sid] = $row;
+            }
         }
-        $_SESSION['cart'][$sid] = $qty;
-    
     }else{
         //刪除項目
         unset($_SESSION['cart'][$sid]);
     }
 }
-
 echo json_encode(($_SESSION['cart']));
+
+//在網址列設定商品名稱和數量 ?sid=6&qty=3
 

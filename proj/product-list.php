@@ -92,7 +92,7 @@ if($totalRows > 0){
                     unset($tmp['cate']); 
                     unset($tmp['lowp']); 
                     unset($tmp['highp']); 
-                    echo http_build_query($tmp); ?>">全部</a>
+                    echo http_build_query($tmp); ?>">所有商品</a>
             <!--  -->
         <?php foreach($cates as $c): 
             $btnStyle = $c['sid']==$cate ? 'btn-primary' : 'btn-outline-primary' 
@@ -168,6 +168,22 @@ if($totalRows > 0){
                 <h5 class="card-title"><?= $r['bookname'] ?></h5>
                 <p class="card-text"><?= $r['author'] ?></p>
                 <p class="card-text"><?= $r['price'] ?></p>
+                <p>
+                    <!-- 不能給id -->
+                    <!-- option selected -->
+                    <!-- https://api.jquery.com/selected-selector/ -->
+                    <select class="form-select">
+                        <?php for($i=1; $i<=10; $i++): ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </p>
+                <p>
+                    <button class="btn btn-warning" 
+                    data-sid="<?= $r['sid']?>"
+                    onclick="addToCart(event)">加入購物車</button>
+                    <!-- event要有 才知道選取的商品項目 -->
+                </p>
             </div>
             </div>
         </div>
@@ -175,6 +191,27 @@ if($totalRows > 0){
     </div>
 </div>
 <?php include __DIR__. '/parts/scripts.php'; ?>
+<script>
+    function addToCart(event) {
+        const btn = $(event.currentTarget);
+        //currentTarget 事件屬性返回其事件偵聽器觸發事件的元素
+        const qty = btn.closest('.card-body').find('select').val();
+        const sid = btn.attr('data-sid');
+        //使用attr叫出自定屬性 data-sid
+
+        // console.log(btn.closest('.card-body').find('select'));
+        console.log({sid, qty});
+
+        // $(selector).get(url,data,success(response,status,xhr),dataType)
+        $.get(
+            'handle-cart.php', 
+            {sid, qty}, 
+            function(data){
+                showCartCount(data);
+            }, 
+            'json');
+    }
+</script>
 <?php include __DIR__. '/parts/html.foot.php'; ?>
 
 

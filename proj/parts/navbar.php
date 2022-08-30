@@ -24,7 +24,9 @@
                             <a class="nav-link <?=$pageName=='list' ? 'active' : '' ?>" href="product-list.php">商品</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?=$pageName=='insert' ? 'active' : '' ?>" href="data-insert.php">新增</a>
+                            <a class="nav-link <?=$pageName=='insert' ? 'active' : '' ?>" href="cart.php">購物車
+                            <span class="badge text-bg-warning" id="cartCount"></span>
+                            </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav mb-2 mb-lg-0">
@@ -48,3 +50,30 @@
             </div>
         </nav>
     </div>
+<script>
+    function showCartCount(obj){
+        let count = 0;
+        // for in
+        // for of
+        for(let k in obj){
+            // k 自己取的 拿到obj的key(sid)
+            // item資料表內的項目
+            const item = obj[k];
+
+            count += +item.qty;
+            // +item +做型別轉換
+            // += 累加
+
+            // count += +item.qty; 計算加總數量
+            // count ++ +item.qty; 計算加總項目
+        }
+        $('#cartCount').html(count);
+    }
+    $.get(
+        'handle-card.php', 
+        {sid, qty}, 
+        function(data){
+            showCartCount(data);
+        }, 
+        'json');
+</script>
