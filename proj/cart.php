@@ -13,7 +13,7 @@ $pageName ='cart'; //頁面名稱
     <?php else : ?>
     <div class="row">
         <div class="col">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover cart-table">
                 <thead>
                     <tr>
                         <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
@@ -31,7 +31,7 @@ $pageName ='cart'; //頁面名稱
                     foreach($_SESSION['cart'] as $k=>$v): 
                         $total += $v['price'] * $v['qty'];  // 計算總價格
                 ?>
-                    <tr data-sid="<?= $k ?>">
+                    <tr data-sid="<?= $k ?>" class="cart-item">
                         <td>
                             <a href="javascropt:" onclick="removeItem(event)">
                                 <i class="fa-solid fa-trash-can"></i>
@@ -40,15 +40,15 @@ $pageName ='cart'; //頁面名稱
                         <td><?= $k ?></td>
                         <td><img src="imgs/small/<?= $v['book_id'] ?>.jpg" alt="<?= $v['bookname'] ?>"></td>
                         <td><?= $v['bookname'] ?></td>
-                        <td><?= $v['price'] ?></td>
+                        <td class="price" data-val="<?= $v['price'] ?>"></td>
                         <td>
-                            <select class="form-select" onchange="updataItem(event)">
+                            <select class="form-select qty" onchange="updataItem(event)">
                                 <?php for($i=1; $i<=10; $i++): ?>
                                     <option value="<?= $i ?>" <?= $i==$v['qty'] ? 'selected' : '' ?>><?= $i ?></option>
                                 <?php endfor; ?>
                             </select>
                         </td>
-                        <td><?= $v['price'] * $v['qty'] ?></td>
+                        <td class="sub-total"></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -56,12 +56,26 @@ $pageName ='cart'; //頁面名稱
         </div>
     </div>
     <div class="alert alert-success" role="alert">
-        <span>總計: </span><span><?= $total ?></span> 元
+        <span>總計: </span><span id="total-price"></span> 元
+    </div>
+    <div>
+        <!-- 判斷登入狀態 -->
+        <?php if(empty($_SESSION['user'])): ?>
+            <div class="alert alert-danger" role="alert">
+                請先登入會員, 再結帳
+            </div>
+        <?php  else: ?>
+            <a href="buy.php" class="btn btn-warning">結帳</a>
+        <?php endif;  ?>
     </div>
     <?php endif; ?>
 </div>
 <?php include __DIR__. '/parts/scripts.php'; ?>
 <script>
+    const dollarCommas = function(n){
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    };
+
     function removeItem(event){
         const tr = $(event.currentTarget).closest('tr');
         const sid = tr.attr('data-sid');
@@ -73,6 +87,7 @@ $pageName ='cart'; //頁面名稱
                 showCartCount(data); // 總數量
                 tr.remove();
                 //TODO:更新小計,總計,總數量
+                updatePrices();
             },
             'json');
     }
@@ -86,9 +101,28 @@ $pageName ='cart'; //頁面名稱
                 console.log(data);
                 showCartCount(data); // 總數量
                 //TODO:更新小計,總計,總數量
+                updatePrices();
             },
             'json');
     }
+    function updatePrices(){
+        let total = 0; // 總價
+
+        $('.cart-item').each(function(){
+            const tr = $(this);
+            const td_price = tr.find('.price');
+            const td_sub = tr.find('.sub-total');
+
+            const price = +td_price.attr('data-val'); // +轉換成數字
+            const qty = +tr.find('.qty').val();
+
+            td_price.html('$ '+ dollarCommas(price));
+            td_sub.html('$ '+ dollarCommas(price * qty));
+            total += price * qty;
+        });
+        $('#total-price').html('$ '+ dollarCommas(total));
+    }
+    updatePrices(); //一進來就要先執行一次
 </script>
 <?php include __DIR__. '/parts/html.foot.php'; ?>
 

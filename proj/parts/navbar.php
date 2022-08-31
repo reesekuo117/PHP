@@ -70,8 +70,8 @@
         $('#cartCount').html(count);
     }
     $.get(
-        'handle-card.php', 
-        {sid, qty}, 
+        'handle-cart.php', 
+        // {sid, qty}, 
         function(data){
             showCartCount(data);
         }, 
